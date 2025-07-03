@@ -20,7 +20,7 @@ public class Book {
     private String author;
     
     @NotBlank(message = "ISBN is required")
-    @Column(unique = true, nullable = false)
+    @Column(name = "isbn", unique = true, nullable = false)
     private String isbn;
     
     @Column(name = "published_year")
@@ -28,7 +28,7 @@ public class Book {
     
     private String category;
     
-    @Column(nullable = false)
+    @Column(name = "available", nullable = false)
     private Boolean available = true;
     
     // Default constructor for JPA
