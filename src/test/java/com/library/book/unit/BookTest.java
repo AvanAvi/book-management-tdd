@@ -10,7 +10,7 @@ class BookTest {
 
     @Test
     void testBookCreationWithValidData() {
-        // Create book with basic required fields
+        // Create book with basic  fields
         Book book = new Book("L'Étranger", "Avan Camus", "978-2070360024");
         
         assertEquals("L'Étranger", book.getTitle());
