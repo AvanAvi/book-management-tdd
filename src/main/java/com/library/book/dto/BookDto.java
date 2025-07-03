@@ -31,7 +31,8 @@ public class BookDto {
     }
     
     // Constructor with all fields
-    public BookDto(Long id, String title, String author, String isbn, Integer publishedYear, String category, Boolean available) {
+    public BookDto(Long id, String title, String author, String isbn, 
+                   Integer publishedYear, String category, Boolean available) {
         this.id = id;
         this.title = title;
         this.author = author;
