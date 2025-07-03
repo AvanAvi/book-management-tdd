@@ -11,6 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Test
     
+    services:
+      docker:
+        image: docker:24-dind
+        options: --privileged
+    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -33,14 +38,11 @@ jobs:
     - name: Compile project
       run: mvn clean compile
 
-    - name: Run tests (when they exist)
-      run: |
-        if find src/test -name "*.java" | grep -q .; then
-          echo "Tests found - running test suite"
-          mvn test
-        else
-          echo "No tests found - skipping test execution"
-        fi
+    - name: Run unit tests
+      run: mvn test
+
+    - name: Run integration tests with Testcontainers
+      run: mvn failsafe:integration-test failsafe:verify
 
     - name: Package application
       run: mvn package -DskipTests
