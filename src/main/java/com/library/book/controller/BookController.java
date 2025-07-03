@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.library.book.dto.BookDto;
 import com.library.book.entity.Book;
-import com.library.book.exception.BookNotFoundException;
 import com.library.book.service.BookService;
 
 import jakarta.validation.Valid;
@@ -34,12 +33,8 @@ public class BookController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BookDto> getBookById(@PathVariable Long id) {
-        try {
-            Book book = bookService.findById(id);
-            return ResponseEntity.ok(convertToDto(book));
-        } catch (BookNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        Book book = bookService.findById(id);
+        return ResponseEntity.ok(convertToDto(book));
     }
 
     @PostMapping
@@ -51,24 +46,16 @@ public class BookController {
 
     @PutMapping("/{id}")
     public ResponseEntity<BookDto> updateBook(@PathVariable Long id, @Valid @RequestBody BookDto bookDto) {
-        try {
-            Book existingBook = bookService.findById(id);
-            updateBookFromDto(existingBook, bookDto);
-            Book updatedBook = bookService.save(existingBook);
-            return ResponseEntity.ok(convertToDto(updatedBook));
-        } catch (BookNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        Book existingBook = bookService.findById(id);
+        updateBookFromDto(existingBook, bookDto);
+        Book updatedBook = bookService.save(existingBook);
+        return ResponseEntity.ok(convertToDto(updatedBook));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
-        try {
-            bookService.deleteById(id);
-            return ResponseEntity.noContent().build();
-        } catch (BookNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        bookService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     private BookDto convertToDto(Book book) {
